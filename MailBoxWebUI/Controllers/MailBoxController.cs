@@ -18,6 +18,11 @@ namespace MailBoxWebUI.Controllers
             return View();
         }
 
+        public IActionResult Mails()
+        {
+            return View();
+        }
+
 
         [HttpGet]
         public IActionResult MailList()

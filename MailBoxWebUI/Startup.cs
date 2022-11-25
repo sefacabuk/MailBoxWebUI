@@ -46,7 +46,7 @@ namespace MailBoxWebUI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=MailBox}/{action=Index}/{id?}");
             });
         }
     }
