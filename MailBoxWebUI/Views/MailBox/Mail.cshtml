@@ -1,0 +1,57 @@
+﻿@model MailBoxDto
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<section class="page-section portfolio mt-5" id="portfolio">
+    <div class="container">
+        <!-- Contact Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">@Model.maiL_NAME</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+        </div>
+        <div class="divider-custom">
+            <div class="float-end text-black-50">@Model.datE_TIME.ToString("HH:mm dd.MM.yyyy")</div>
+        </div>
+        <!-- Contact Section Form-->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+
+                <!-- Name input-->
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="subject" type="text" value="@Model.subject" disabled readonly="readonly">
+                </div>
+                <!-- Message input-->
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="message" style="height:180px" disabled> @Model.content</textarea>
+                </div>
+
+                <button class="btn btn-danger float-end btn-xl" id="btnBack" style="float:right;" type="button">Back</button>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            $(document).on("click",
+                '#btnBack',
+                function (event) {
+
+                    window.location.href = "/MailBox/Mails/";
+
+                });
+
+        });
+
+    </script>
+
+}

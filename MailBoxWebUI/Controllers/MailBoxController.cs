@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +18,63 @@ namespace MailBoxWebUI.Controllers
         {
             return View();
         }
+        
+        public IActionResult AddMail()
+        {
+            return View();
+        }
 
         public IActionResult Mails()
         {
             return View();
+        }
+        
+        public IActionResult Mail(string id)
+        {
+
+            if (string.IsNullOrEmpty(id))
+            {
+                RedirectToAction("Index");
+            }
+
+            MailBoxDto mailView = new MailBoxDto();
+
+            string link = ApiCall.ApiLink + "api/MailBox/" + id;
+
+
+            try
+            {
+                var httpClient = new HttpClient();
+
+                string json = "";
+                var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                var postTask = httpClient.GetAsync(link);
+                postTask.Wait();
+                var postResult = postTask.Result;
+                var responJsonText = postResult.Content.ReadAsStringAsync().Result;
+
+                var sonuc = (JsonConvert.DeserializeObject<MailBoxDto>(responJsonText));
+
+                UpdateMail(new MailBoxDto
+                {
+                    id = sonuc.id,
+                    maiL_NAME = sonuc.maiL_NAME,
+                    subject = sonuc.subject,
+                    content = sonuc.content,
+                    datE_TIME = sonuc.datE_TIME,
+                    isread = true
+                });
+
+                mailView = sonuc;
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return View(mailView);
+
         }
 
 
@@ -78,6 +132,7 @@ namespace MailBoxWebUI.Controllers
 
                 var sonuc = (JsonConvert.DeserializeObject<MailBoxDto>(responJsonText));
 
+
                 return Json(sonuc);
             }
             catch (Exception ex)
@@ -88,7 +143,7 @@ namespace MailBoxWebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveMail(MailBoxDto newIspark)
+        public IActionResult SaveMail(MailBoxDto mailBox)
         {
 
             string link = ApiCall.ApiLink + "api/MailBox";
@@ -99,7 +154,7 @@ namespace MailBoxWebUI.Controllers
                 var httpClient = new HttpClient();
 
                 string json = "";
-                json = Newtonsoft.Json.JsonConvert.SerializeObject(newIspark);
+                json = Newtonsoft.Json.JsonConvert.SerializeObject(mailBox);
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var postTask = httpClient.PostAsync(link, httpContent);
                 postTask.Wait();
@@ -109,19 +164,19 @@ namespace MailBoxWebUI.Controllers
                 var sonuc = (JsonConvert.DeserializeObject<MailBoxDto>(responJsonText));
 
 
-                return Json(new { success = true, responseText = "Kayıt Başarılı" });
+                return Json(new { success = true, responseText = "Saved Success" });
 
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, responseText = "Hata" });
+                return Json(new { success = false, responseText = "Error" });
             }
 
         }
 
 
         [HttpPut]
-        public IActionResult UpdateMail(MailBoxDto newIspark)
+        public IActionResult UpdateMail(MailBoxDto mailBox)
         {
 
             string link = ApiCall.ApiLink + "api/MailBox/";
@@ -131,7 +186,7 @@ namespace MailBoxWebUI.Controllers
                 var httpClient = new HttpClient();
 
                 string json = "";
-                json = Newtonsoft.Json.JsonConvert.SerializeObject(newIspark);
+                json = Newtonsoft.Json.JsonConvert.SerializeObject(mailBox);
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var postTask = httpClient.PutAsync(link, httpContent);
                 postTask.Wait();
@@ -151,7 +206,43 @@ namespace MailBoxWebUI.Controllers
 
 
         }
+        public IActionResult DeleteMail(string id)
+        {
 
+            string link = ApiCall.ApiLink + "api/MailBox/" + id;
+
+            try
+            {
+                var httpClient = new HttpClient();
+
+                string json = "";
+
+
+                var postTask = httpClient.DeleteAsync(link);
+                postTask.Wait();
+                var postResult = postTask.Result;
+                var responJsonText = postResult.Content.ReadAsStringAsync().Result;
+
+                var sonuc = (JsonConvert.DeserializeObject<object>(responJsonText));
+
+                
+
+                if (postResult.StatusCode != HttpStatusCode.OK)
+                {
+                    return Json(new { success = false, responseText = "Deleted Error" });
+                }
+
+
+                return Json(new { success = true, responseText = "Deleted Success" });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, responseText = "Deleted Error" });
+            }
+
+
+        }
 
 
     }
