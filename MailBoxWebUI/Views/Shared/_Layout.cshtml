@@ -41,8 +41,16 @@
                         </a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/MailBox/">
+                            <i class="fas fa-envelope"></i>
+                            Mails
+                            <span class="badge badge-danger badge-counter messageCount unreadMessage"></span>
+
+                        </a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/MailBox/AddMail">
-                            <i class="fa fa-envelope"></i>
+                            <i class="fa fa-plus"></i>
                             New Mail
                         </a>
                     </li>
@@ -67,12 +75,12 @@
             position: absolute;
             transform: scale(1.7);
             transform-origin: top right;
-            right: 37rem;
+            right: 22rem;
             margin-top: -0.2rem;
             display: inline-block;
-            padding: .1em 0.4em;
-            font-size: 97%;
-            font-weight: 900;
+            padding: .2em 0.5em;
+            font-size: 50%;
+            font-weight: 700;
             line-height: 1;
             text-align: center;
             white-space: nowrap;
@@ -113,5 +121,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/6.2.7/js/tempus-dominus.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @RenderSection("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+
+            UnreadList();
+
+            var unread = 0;
+
+            function UnreadList() {
+                $.ajax({
+                    type: 'GET',
+                    url: "/MailBox/MailList",
+                    dataType: "json",
+                    success: function (result) {
+                        for (var i = 0; i < result.length; i++) {
+                            if (result[i].isread == false) {
+                                unread++;
+                            }
+                        }
+                        $(".unreadMessage").html(unread);
+                    },
+                    error: function (result) {
+
+                    },
+                    complete: function () {
+                    }
+                });
+            }
+        });
+
+    </script>
+
 </body>
 </html>

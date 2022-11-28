@@ -84,6 +84,13 @@
                         }
 
 
+                        var length = 10;
+
+                        var string = result[i].content;
+                        var trimmedString = string.length > length ?
+                            string.substring(0, length - 3) + "..." : string;
+                            
+
                         if (result[i].isread == false) {
 
                             readHtml = "<i class='fas fa-flag text-danger'></i>";
@@ -91,7 +98,7 @@
                                 "   <td class='table_item'  data-row_id='" + result[i].id + "' >" + readHtml + "</td>" +
                                 "   <td class='table_item'  data-row_id='" + result[i].id + "' >" + result[i].maiL_NAME + "</td>" +
                                 "   <td class='table_item'  data-row_id='" + result[i].id + "' >" + result[i].subject + "</td>" +
-                                "   <td class='table_item'  data-row_id='" + result[i].id + "' >" + result[i].content + "</td>" +
+                                "   <td class='table_item'  data-row_id='" + result[i].id + "' >" + trimmedString + "</td>" +
                                 "   <td class='table_item'  data-row_id='" + result[i].id + "' >" + date + "</td>" +
                                 "   <td><button  data-row_id='" + result[i].id + "' id='btnDelete' class='btn btn-danger'><i class='fas fa-trash'></i></button></td>" +
                                 "</tr>";
@@ -102,7 +109,7 @@
                                 "   <td class='table_item' data-row_id='" + result[i].id + "'>" + readHtml + "</td>" +
                                 "   <td class='table_item' data-row_id='" + result[i].id + "'>" + result[i].maiL_NAME + "</td>" +
                                 "   <td class='table_item' data-row_id='" + result[i].id + "'>" + result[i].subject + "</td>" +
-                                "   <td class='table_item' data-row_id='" + result[i].id + "'>" + result[i].content + "</td>" +
+                                "   <td class='table_item' data-row_id='" + result[i].id + "'>" + trimmedString + "</td>" +
                                 "   <td class='table_item' data-row_id='" + result[i].id + "'>" + date + "</td>" +
                                 "   <td><button  data-row_id='" + result[i].id + "' id='btnDelete' class='btn btn-danger'><i class='fas fa-trash'></i></button></td>" +
                                 "</tr>";
