@@ -122,34 +122,31 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @RenderSection("Scripts", required: false)
     <script>
-        $(document).ready(function () {
+        UnreadList();
 
-            UnreadList();
+       
 
-            var unread = 0;
-
-            function UnreadList() {
-                $.ajax({
-                    type: 'GET',
-                    url: "/MailBox/MailList",
-                    dataType: "json",
-                    success: function (result) {
-                        for (var i = 0; i < result.length; i++) {
-                            if (result[i].isread == false) {
-                                unread++;
-                            }
+        function UnreadList() {
+            $.ajax({
+                type: 'GET',
+                url: "/MailBox/MailList",
+                dataType: "json",
+                success: function (result) {
+                    var unread = 0;
+                    for (var i = 0; i < result.length; i++) {
+                        if (result[i].isread == false) {
+                            unread++;
                         }
-                        $(".unreadMessage").html(unread);
-                    },
-                    error: function (result) {
-
-                    },
-                    complete: function () {
                     }
-                });
-            }
-        });
+                    $(".unreadMessage").html(unread);
+                },
+                error: function (result) {
 
+                },
+                complete: function () {
+                }
+            });
+        }
     </script>
 
 </body>
