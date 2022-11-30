@@ -2717,7 +2717,7 @@ textarea.form-control-lg {
   padding-bottom: 1.5rem;
 }
 .form-floating > .form-control:focus, .form-floating > .form-control:not(:placeholder-shown) {
-  padding-top: 2.5rem;
+  padding-top: 5.5rem;
   padding-bottom: 1.5rem;
 }
 .form-floating > .form-control:-webkit-autofill {

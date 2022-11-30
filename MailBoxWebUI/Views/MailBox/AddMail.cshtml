@@ -12,19 +12,17 @@
                 <form id="formSave" name="formSave">
 
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="mail_NAME" name="mail_NAME" type="text" placeholder="Enter mail name..." data-sb-validations="required" data-sb-can-submit="no">
-                        <label for="mail_NAME">Mail Name</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+
+                        <label>Mail Name</label>
+                        <input class="form-control" id="maiL_NAME" name="maiL_NAME" type="text">
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="subject" name="subject" type="text" placeholder="Enter subject..." data-sb-validations="required" data-sb-can-submit="no">
-                        <label for="subject">Subject</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A subject is required.</div>
+                        <label>Subject</label>
+                        <input class="form-control" id="subject" name="subject" type="text">
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="content" name="content" type="text" placeholder="Enter Message..." data-sb-validations="required" data-sb-can-submit="no">
-                        <label for="content">Message</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A Message is required.</div>
+                        <label>Message</label>
+                        <input class="form-control" id="content" name="content" type="text">
                     </div>
 
                     <button class="btn bg-primary float-end btn-xl m-2" id="btnSubmit" style="float:right; color:#ffffff" type="button">Submit</button>
@@ -35,9 +33,11 @@
         </div>
     </div>
 </section>
+
+
 @section Scripts{
-   
- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
     <script>
 
@@ -66,7 +66,6 @@
                 '#btnSubmit',
                 function (event) {
 
-                    GosterBeklet();
 
                     event.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -88,15 +87,15 @@
                         messages: {
                             maiL_NAME: {
                                 required:
-                                    'Zorunlu Alan'
+                                    'This Field Required'
                             },
                             subject: {
                                 required:
-                                    'Zorunlu Alan'
+                                    'This Field Required'
                             },
                             content: {
                                 required:
-                                    'Zorunlu Alan'
+                                    'This Field Required'
                             }
                         },
                     });
@@ -104,6 +103,8 @@
                     if (!form.valid()) {
                         return;
                     }
+                    GosterBeklet();
+
                     // Create an FormData object
                     var data = new FormData(form[0]);
 
